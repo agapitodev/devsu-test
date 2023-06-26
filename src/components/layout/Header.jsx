@@ -1,4 +1,3 @@
-import React from 'react'
 import { styled } from 'styled-components'
 
 const Wrapper = styled.header({
@@ -12,11 +11,7 @@ const Wrapper = styled.header({
 const Header = () => {
   return (
     <Wrapper>
-      <img
-        src='/pichincha-logo.png'
-        alt='banco pichincha'
-        height={70}
-      />
+      <img src='/pichincha-logo.png' alt='banco pichincha' height={70} />
     </Wrapper>
   )
 }
