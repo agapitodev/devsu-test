@@ -5,16 +5,15 @@ module.exports = {
   },
   extends: [
     'standard',
-    'plugin:react/recommended'
+    'plugin:react/recommended',
+    'plugin:prettier/recommended'
   ],
   overrides: [
     {
       env: {
         node: true
       },
-      files: [
-        '.eslintrc.{js,cjs}'
-      ],
+      files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
         sourceType: 'script'
       }
@@ -30,9 +29,13 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
-  plugins: [
-    'react'
-  ],
+  plugins: ['react'],
   rules: {
+    'react/react-in-jsx-scope': 'off'
+  },
+  settings: {
+    react: {
+      version: 'detect'
+    }
   }
 }
