@@ -5,14 +5,20 @@ import { styled } from 'styled-components'
 const Wrapper = styled.div({
   width: '100%',
   minHeight: '100vh',
-  backgroundColor: '#F5F6FA'
+  backgroundColor: (props) => props.theme.palette.gray[100]
+})
+
+const Content = styled.div({
+  width: '100%',
+  maxWidth: '1200px',
+  margin: '50px auto 0px'
 })
 
 const Container = (props) => {
   return (
     <Wrapper>
       <Header />
-      {props.children}
+      <Content>{props.children}</Content>
     </Wrapper>
   )
 }
