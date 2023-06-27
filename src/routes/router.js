@@ -1,22 +1,17 @@
 import React from 'react'
-import { createBrowserRouter } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Home from './Home'
 import Create from './Create'
 import Edit from './Edit'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />
-  },
-  {
-    path: '/create',
-    element: <Create />
-  },
-  {
-    path: '/edit',
-    element: <Edit />
-  }
-])
+const AppRouter = () => {
+  return (
+    <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path='/create' element={<Create />} />
+      <Route path='/edit' element={<Edit />} />
+    </Routes>
+  )
+}
 
-export default router
+export default AppRouter

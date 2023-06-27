@@ -1,27 +1,34 @@
-import {
-  screen,
-  renderWithProviders,
-  renderWithProvidersandRouter
-} from '../../test-utils'
-import { Create, Edit, Home, router } from '..'
-import userEvent from '@testing-library/user-event'
-import { RouterProvider } from 'react-router-dom'
+import { screen, renderWithProviders, renderWithRouter } from '../../test-utils'
+import { AppRouter } from '..'
+import { MemoryRouter } from 'react-router-dom'
 
 describe('Renders all routes', () => {
   test('Renders Home react page', () => {
-    renderWithProvidersandRouter(<Home />)
+    renderWithProviders(
+      <MemoryRouter initialEntries={['/']}>
+        <AppRouter />
+      </MemoryRouter>
+    )
     const textElement = screen.getByText(/resultados/i)
     expect(textElement).toBeInTheDocument()
   })
 
   test('Renders Create react page', () => {
-    renderWithProvidersandRouter(<Create />)
+    renderWithProviders(
+      <MemoryRouter initialEntries={['/create']}>
+        <AppRouter />
+      </MemoryRouter>
+    )
     const textElement = screen.getByText(/Create page/i)
     expect(textElement).toBeInTheDocument()
   })
 
   test('Renders Edit react page', () => {
-    renderWithProvidersandRouter(<Edit />)
+    renderWithProviders(
+      <MemoryRouter initialEntries={['/edit']}>
+        <AppRouter />
+      </MemoryRouter>
+    )
     const textElement = screen.getByText(/Edit page/i)
     expect(textElement).toBeInTheDocument()
   })
@@ -29,8 +36,7 @@ describe('Renders all routes', () => {
 
 describe('Navigate between routes', () => {
   test('Redirect to Create page', async () => {
-    renderWithProviders(<RouterProvider router={router} />)
-    const user = userEvent.setup()
+    const { user } = renderWithRouter(<AppRouter />)
 
     await user.click(screen.getByText(/Agregar/i))
 
