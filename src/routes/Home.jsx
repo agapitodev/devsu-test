@@ -1,10 +1,18 @@
-import React from 'react'
-import Container from '../components/layout/Container'
+import { Container } from '../components/layout'
+import { Button, Row, TextField } from '../components/ui'
+import { ProductsTable } from '../features/listProducts'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   return (
     <Container>
-      Home page with the products list
+      <Row justify='space-between' mb={15}>
+        <TextField id='search' placeholder='Search...' />
+        <Button as={Link} to='/create'>
+          Agregar
+        </Button>
+      </Row>
+      <ProductsTable />
     </Container>
   )
 }
