@@ -1,7 +1,12 @@
 import Container from '../components/layout/Container'
+import { CreateProductForm } from '../features/createProduct'
 
 const Create = () => {
-  return <Container>Create page with the create product form</Container>
+  return (
+    <Container>
+      <CreateProductForm />
+    </Container>
+  )
 }
 
 export default Create

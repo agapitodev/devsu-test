@@ -8,7 +8,7 @@ const Home = () => {
     <Container>
       <Row justify='space-between' mb={15}>
         <TextField id='search' placeholder='Search...' />
-        <Button as={Link} to='/create'>
+        <Button as={Link} to='/create' color='primary'>
           Agregar
         </Button>
       </Row>

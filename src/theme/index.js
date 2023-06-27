@@ -10,6 +10,9 @@ export const theme = {
       main: '#0F265C',
       dark: '#0A1A40'
     },
+    default: {
+      main: '#EEEEEE'
+    },
     gray: {
       100: '#F5F5F5',
       300: '#E0E0E0',

@@ -1,11 +1,39 @@
 import PropTypes from 'prop-types'
 import { styled } from 'styled-components'
 
+const COLOR_TYPES = {
+  PRIMARY: 'primary',
+  SECONDARY: 'secondary',
+  DEFAULT: 'default'
+}
+
+const getColorButton = (color) => {
+  switch (color) {
+    case COLOR_TYPES.PRIMARY:
+      return (props) => props.theme.palette.secondary.main
+    case COLOR_TYPES.SECONDARY:
+      return (props) => props.theme.palette.primary.main
+    case COLOR_TYPES.DEFAULT:
+      return (props) => props.theme.palette.secondary.main
+  }
+}
+
+const getBackgroundColorButton = (color) => {
+  switch (color) {
+    case COLOR_TYPES.PRIMARY:
+      return (props) => props.theme.palette.primary.main
+    case COLOR_TYPES.SECONDARY:
+      return (props) => props.theme.palette.secondary.main
+    case COLOR_TYPES.DEFAULT:
+      return (props) => props.theme.palette.default.main
+  }
+}
+
 const Button = styled.button.attrs((props) => ({ type: props.type }))({
   display: 'flex',
   alignItems: 'center',
-  backgroundColor: (props) => props.theme.palette.primary.main,
-  color: (props) => props.theme.palette.secondary.main,
+  backgroundColor: (props) => getBackgroundColorButton(props.color),
+  color: (props) => getColorButton(props.color),
   fontSize: (props) => props.theme.spacing(2),
   height: (props) => props.theme.spacing(6),
   paddingLeft: (props) => props.theme.spacing(2.5),
@@ -19,11 +47,13 @@ const Button = styled.button.attrs((props) => ({ type: props.type }))({
 
 Button.propTypes = {
   children: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['button', 'submit', 'reset'])
+  type: PropTypes.oneOf(['button', 'submit', 'reset']),
+  color: PropTypes.oneOf(['primary', 'secondary', 'default'])
 }
 
 Button.defaultProps = {
-  type: 'button'
+  type: 'button',
+  color: 'default'
 }
 
 export default Button

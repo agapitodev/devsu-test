@@ -19,7 +19,7 @@ describe('Renders all routes', () => {
         <AppRouter />
       </MemoryRouter>
     )
-    const textElement = screen.getByText(/Create page/i)
+    const textElement = screen.getByText(/Formulario de Registro/i)
     expect(textElement).toBeInTheDocument()
   })
 
@@ -40,7 +40,7 @@ describe('Navigate between routes', () => {
 
     await user.click(screen.getByText(/Agregar/i))
 
-    const textElement = screen.getByText(/Create page/i)
+    const textElement = screen.getByText(/Formulario de Registro/i)
     expect(textElement).toBeInTheDocument()
   })
 })
