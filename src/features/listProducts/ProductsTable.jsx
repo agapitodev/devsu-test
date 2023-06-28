@@ -1,6 +1,8 @@
 import { Table, Icon } from '../../components/ui'
 import { IoMdInformation } from 'react-icons/io'
 import MenuAction from './MenuAction'
+import { useEffect, useState } from 'react'
+import { productService } from '../../services'
 
 const header = [
   { key: 'logo', label: 'Logo' },
@@ -45,35 +47,23 @@ const header = [
   }
 ]
 
-const mockedData = [
-  {
-    id: 'adb',
-    name: 'Primero',
-    description: 'Primer producto',
-    logo: 'JC',
-    date_release: new Date('2000-01-01').toDateString(),
-    date_revision: new Date('2001-01-01').toDateString()
-  },
-  {
-    id: 'adk',
-    name: 'Segundo',
-    description: 'Segundo producto',
-    logo: 'JC',
-    date_release: new Date('2000-01-01').toDateString(),
-    date_revision: new Date('2001-01-01').toDateString()
-  },
-  {
-    id: 'adn',
-    name: 'Tercero',
-    description: 'Tercer producto',
-    logo: 'JC',
-    date_release: new Date('2000-01-01').toDateString(),
-    date_revision: new Date('2001-01-01').toDateString()
-  }
-]
-
 const ProductsTable = () => {
-  return <Table header={header} data={mockedData} />
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const fecthProducts = async () => {
+      let products
+      try {
+        products = await productService.getProducts()
+        setData(products)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fecthProducts()
+  }, [])
+
+  return <Table header={header} data={data} />
 }
 
 export default ProductsTable
