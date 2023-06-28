@@ -41,7 +41,7 @@ const TableBody = styled.tbody({
     '& td': {
       borderTop: (props) => `1px solid ${props.theme.palette.gray[300]}`
     },
-    '& td:first-of-type': {
+    '& td:first-of-type, & td:last-of-type': {
       textAlign: 'center'
     },
     '&:last-of-type': {
@@ -57,28 +57,31 @@ const perPageOptions = [
 ]
 
 const Table = (props) => {
+  const { header, data } = props
   return (
     <TableWrapped>
       <table>
-        <TableHeader $cols={props.header.length}>
+        <TableHeader $cols={header.length}>
           <tr>
-            {props.header.map((column) => (
+            {header.map((column) => (
               <th key={column.key}>{column.label}</th>
             ))}
           </tr>
         </TableHeader>
         <TableBody>
-          {props.data.map((row) => (
+          {data.map((row) => (
             <tr key={row.id}>
-              {props.header.map((cell) => (
-                <td key={`${row.id}_${cell.key}`}>{row[cell.key]}</td>
+              {header.map((cell) => (
+                <td key={`${row.id}_${cell.key}`}>
+                  {cell.defaultValue ?? row[cell.key]}
+                </td>
               ))}
             </tr>
           ))}
         </TableBody>
       </table>
       <Row justify='space-between' align='center'>
-        <span>{props.data.length} resultados</span>
+        <span>{data.length} resultados</span>
         <Select options={perPageOptions} />
       </Row>
     </TableWrapped>
@@ -90,7 +93,8 @@ Table.propTypes = {
     PropTypes.shape({
       key: PropTypes.string.isRequired,
       label: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
-        .isRequired
+        .isRequired,
+      defaultValue: PropTypes.node
     })
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.object)

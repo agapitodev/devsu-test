@@ -1,6 +1,6 @@
 import { Table, Icon } from '../../components/ui'
-import { MdMoreVert } from 'react-icons/md'
 import { IoMdInformation } from 'react-icons/io'
+import MenuAction from './MenuAction'
 
 const header = [
   { key: 'logo', label: 'Logo' },
@@ -40,7 +40,8 @@ const header = [
   },
   {
     key: 'actions',
-    label: ''
+    label: '',
+    defaultValue: <MenuAction />
   }
 ]
 
@@ -51,8 +52,7 @@ const mockedData = [
     description: 'Primer producto',
     logo: 'JC',
     date_release: new Date('2000-01-01').toDateString(),
-    date_revision: new Date('2001-01-01').toDateString(),
-    actions: <MdMoreVert />
+    date_revision: new Date('2001-01-01').toDateString()
   },
   {
     id: 'adk',
@@ -60,8 +60,7 @@ const mockedData = [
     description: 'Segundo producto',
     logo: 'JC',
     date_release: new Date('2000-01-01').toDateString(),
-    date_revision: new Date('2001-01-01').toDateString(),
-    actions: <MdMoreVert />
+    date_revision: new Date('2001-01-01').toDateString()
   },
   {
     id: 'adn',
@@ -69,8 +68,7 @@ const mockedData = [
     description: 'Tercer producto',
     logo: 'JC',
     date_release: new Date('2000-01-01').toDateString(),
-    date_revision: new Date('2001-01-01').toDateString(),
-    actions: <MdMoreVert />
+    date_revision: new Date('2001-01-01').toDateString()
   }
 ]
 

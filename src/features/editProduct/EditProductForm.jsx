@@ -1,12 +1,12 @@
 import ProudctForm from '../../components/form/ProductForm'
 import { Card } from '../../components/ui'
 
-const CreateProductForm = () => {
+const EditProductForm = () => {
   return (
-    <Card title='Formulario de Registro'>
+    <Card title='Formulario de Edición'>
       <ProudctForm />
     </Card>
   )
 }
 
-export default CreateProductForm
+export default EditProductForm

@@ -1,7 +1,12 @@
 import Container from '../components/layout/Container'
+import { EditProductForm } from '../features/editProduct'
 
 const Edit = () => {
-  return <Container>Edit page with the edit product form</Container>
+  return (
+    <Container>
+      <EditProductForm />
+    </Container>
+  )
 }
 
 export default Edit

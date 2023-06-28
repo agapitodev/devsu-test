@@ -1,6 +1,5 @@
 import { addYears, format } from 'date-fns'
-import { Button, TextField } from '../ui'
-import { styled } from 'styled-components'
+import { Button, Form, TextField } from '../ui'
 
 const fields = [
   { id: 'id', label: 'ID', placeholder: 'Id del producto', disabled: false },
@@ -36,29 +35,16 @@ const fields = [
   }
 ]
 
-const FormWrapper = styled.form({
-  width: '100%',
-  paddingLeft: (props) => props.theme.spacing(6),
-  paddingRight: (props) => props.theme.spacing(6),
-  paddingBottom: (props) => props.theme.spacing(6),
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  columnGap: 20,
-  rowGap: 35
-})
-
-const ButtonsWrapper = styled.div({
-  width: '100%',
-  gridColumn: '1 / 3',
-  display: 'flex',
-  justifyContent: 'center',
-  gap: 40,
-  marginTop: (props) => props.theme.spacing(5)
-})
-
 const ProudctForm = () => {
   return (
-    <FormWrapper>
+    <Form
+      buttons={
+        <>
+          <Button>Reiniciar</Button>
+          <Button color='primary'>Enviar</Button>
+        </>
+      }
+    >
       {fields.map((field) => (
         <TextField
           key={field.id}
@@ -70,11 +56,7 @@ const ProudctForm = () => {
           fullWidth
         />
       ))}
-      <ButtonsWrapper>
-        <Button>Reiniciar</Button>
-        <Button color='primary'>Enviar</Button>
-      </ButtonsWrapper>
-    </FormWrapper>
+    </Form>
   )
 }
 
