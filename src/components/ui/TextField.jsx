@@ -4,7 +4,7 @@ import { styled } from 'styled-components'
 const Wrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
-  width: (props) => (props.fullWidth ? '100%' : props.theme.spacing(30))
+  width: (props) => (props.$fullwidth ? '100%' : props.theme.spacing(30))
 })
 
 const Input = styled.input({
@@ -27,9 +27,9 @@ const Label = styled.label({
 })
 
 const TextField = (props) => {
-  const { label, fullWidth, ...inputProps } = props
+  const { label, $fullwidth, ...inputProps } = props
   return (
-    <Wrapper fullWidth={fullWidth}>
+    <Wrapper $fullwidth={$fullwidth}>
       {label && <Label htmlFor={inputProps.id}>{label}</Label>}
       <Input {...inputProps} />
     </Wrapper>
@@ -42,13 +42,13 @@ TextField.propTypes = {
   placeholder: PropTypes.string,
   type: PropTypes.oneOf(['text', 'number', 'password', 'date']),
   disabled: PropTypes.bool,
-  fullWidth: PropTypes.bool
+  $fullwidth: PropTypes.bool
 }
 
 TextField.defaultProps = {
   type: 'text',
   disabled: false,
-  fullWidth: false
+  $fullwidth: false
 }
 
 export default TextField

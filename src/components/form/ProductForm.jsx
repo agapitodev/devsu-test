@@ -53,7 +53,7 @@ const ProudctForm = () => {
           placeholder={field.placeholder}
           type={field.type}
           disabled={field.disabled}
-          fullWidth
+          $fullwidth
         />
       ))}
     </Form>
