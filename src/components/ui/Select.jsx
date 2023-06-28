@@ -10,9 +10,10 @@ const SelectWrapper = styled.select({
 })
 
 const Select = (props) => {
+  const { options, ...selectProps } = props
   return (
-    <SelectWrapper>
-      {props.options.map((item) => (
+    <SelectWrapper {...selectProps}>
+      {options.map((item) => (
         <option key={item.value} value={item.value}>
           {item.label}
         </option>
@@ -22,6 +23,9 @@ const Select = (props) => {
 }
 
 Select.propTypes = {
+  value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  ariaLabel: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,

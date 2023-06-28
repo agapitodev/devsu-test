@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 import { styled } from 'styled-components'
 import Row from './Row'
 import Select from './Select'
+import { useEffect, useState } from 'react'
+import TablePaginator from './TablePaginator'
 
 const TableWrapped = styled.div({
   backgroundColor: '#FFF',
@@ -58,6 +60,27 @@ const perPageOptions = [
 
 const Table = (props) => {
   const { header, data } = props
+  const [dataToShow, setDataToShow] = useState([])
+  const [page, setPage] = useState(0)
+  const [perPage, setPerPage] = useState(15)
+
+  useEffect(() => {
+    if (perPage < data.length) {
+      const start = page * perPage
+      if (start + perPage > data.length) {
+        setDataToShow(data.slice(start))
+      } else {
+        setDataToShow(data.slice(start, start + perPage))
+      }
+    } else {
+      setDataToShow(data)
+    }
+  }, [perPage, page, data])
+
+  useEffect(() => {
+    setPage(0)
+  }, [perPage, data])
+
   return (
     <TableWrapped>
       <table>
@@ -69,7 +92,7 @@ const Table = (props) => {
           </tr>
         </TableHeader>
         <TableBody>
-          {data.map((row) => (
+          {dataToShow.map((row) => (
             <tr key={row.id}>
               {header.map((cell) => (
                 <td key={`${row.id}_${cell.key}`}>
@@ -81,8 +104,20 @@ const Table = (props) => {
         </TableBody>
       </table>
       <Row justify='space-between' align='center'>
-        <span>{data.length} resultados</span>
-        <Select options={perPageOptions} />
+        <span>
+          {data.length} resultado{data.length !== 1 ? 's' : ''}
+        </span>
+        <TablePaginator
+          setPage={setPage}
+          showPreviousButton={page > 0}
+          showNextButton={(page + 1) * perPage < data.length}
+        />
+        <Select
+          options={perPageOptions}
+          value={perPage}
+          onChange={(event) => setPerPage(Number(event.target.value))}
+          aria-label='per-page'
+        />
       </Row>
     </TableWrapped>
   )
