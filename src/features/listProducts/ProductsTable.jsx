@@ -1,12 +1,26 @@
 import { useEffect, useState } from 'react'
-import { Table, Icon, Button, Row, TextField } from '../../components/ui'
+import {
+  Table,
+  Icon,
+  Button,
+  Row,
+  TextField,
+  Avatar
+} from '../../components/ui'
 import { IoMdInformation } from 'react-icons/io'
 import MenuAction from './MenuAction'
 import { productService } from '../../services'
 import { Link } from 'react-router-dom'
+import { format } from 'date-fns'
 
 const header = [
-  { key: 'logo', label: 'Logo' },
+  {
+    key: 'logo',
+    label: 'Logo',
+    render: (value) => {
+      return <Avatar src={value} />
+    }
+  },
   { key: 'name', label: 'Nombre del Producto' },
   {
     key: 'description',
@@ -28,7 +42,10 @@ const header = [
           <IoMdInformation />
         </Icon>
       </div>
-    )
+    ),
+    render: (value) => {
+      return format(new Date(value), 'dd/MM/y')
+    }
   },
   {
     key: 'date_revision',
@@ -39,7 +56,10 @@ const header = [
           <IoMdInformation />
         </Icon>
       </div>
-    )
+    ),
+    render: (value) => {
+      return format(new Date(value), 'dd/MM/y')
+    }
   },
   {
     key: 'actions',
@@ -83,6 +103,7 @@ const ProductsTable = () => {
           placeholder='Search...'
           value={search}
           onChange={(event) => setSearch(event.target.value)}
+          dense
         />
         <Button as={Link} to='/create' color='primary'>
           Agregar
