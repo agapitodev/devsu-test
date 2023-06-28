@@ -1,4 +1,9 @@
-import { screen, renderWithProviders, renderWithRouter } from '../../test-utils'
+import {
+  screen,
+  renderWithProviders,
+  renderWithRouter,
+  act
+} from '../../test-utils'
 import { AppRouter } from '..'
 import { MemoryRouter } from 'react-router-dom'
 
@@ -29,7 +34,7 @@ describe('Renders all routes', () => {
         <AppRouter />
       </MemoryRouter>
     )
-    const textElement = screen.getByText(/Edit page/i)
+    const textElement = screen.getByText(/Formulario de Edición/i)
     expect(textElement).toBeInTheDocument()
   })
 })
@@ -38,9 +43,25 @@ describe('Navigate between routes', () => {
   test('Redirect to Create page', async () => {
     const { user } = renderWithRouter(<AppRouter />)
 
-    await user.click(screen.getByText(/Agregar/i))
+    await act(async () => {
+      await user.click(screen.getByText(/Agregar/i))
+    })
 
     const textElement = screen.getByText(/Formulario de Registro/i)
+    expect(textElement).toBeInTheDocument()
+  })
+
+  test('Redirect to Edit page', async () => {
+    const { user } = renderWithRouter(<AppRouter />)
+
+    await act(async () => {
+      await user.click(screen.getAllByRole('menu')[0])
+    })
+    await act(async () => {
+      await user.click(screen.getByText(/Editar/i))
+    })
+
+    const textElement = screen.getByText(/Formulario de Edición/i)
     expect(textElement).toBeInTheDocument()
   })
 })

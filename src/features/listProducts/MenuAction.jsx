@@ -18,7 +18,7 @@ const MenuAction = () => {
 
   return (
     <>
-      <IconButton onClick={handleClick}>
+      <IconButton onClick={handleClick} role='menu'>
         <MdMoreVert />
       </IconButton>
       <Menu open={open} anchorElement={anchorElement} handleClose={handleClose}>
