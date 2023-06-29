@@ -89,9 +89,7 @@ const ProductsTable = () => {
       try {
         products = await productService.getProducts()
         setData(products)
-      } catch (error) {
-        console.error(error)
-      }
+      } catch (error) {}
     }
     fecthProducts()
   }, [])
@@ -105,7 +103,7 @@ const ProductsTable = () => {
           placeholder='Search...'
           value={search}
           onChange={(event) => setSearch(event.target.value)}
-          dense
+          $dense
         />
         <Button as={Link} to='/create' color='primary'>
           Agregar

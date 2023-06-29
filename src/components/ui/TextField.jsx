@@ -15,15 +15,14 @@ const Wrapper = styled.div({
 const TextField = (props) => {
   const [isValid, setIsValid] = useState('success')
   const [touched, setTouched] = useState(false)
-  const { label, $fullwidth, onBlur, asyncValidator, ...inputProps } = props
-  const handleBlur = async (event) => {
+  const { label, $fullwidth, asyncValidator, ...inputProps } = props
+  const handleBlur = async () => {
     setTouched(true)
     if (asyncValidator && !props.error) {
       setIsValid('loading')
       const response = await asyncValidator()
       setIsValid(response ? 'success' : 'error')
     }
-    if (onBlur) onBlur(event)
   }
   return (
     <Wrapper $fullwidth={$fullwidth}>
@@ -34,9 +33,9 @@ const TextField = (props) => {
       )}
       <Input
         onBlur={handleBlur}
+        $touched={touched}
+        $isValid={isValid !== 'error'}
         {...inputProps}
-        touched={touched}
-        isValid={isValid !== 'error'}
       />
       {touched && props.error && <HelperText>{props.error}</HelperText>}
       {isValid === 'loading' && <HelperText>Validando</HelperText>}
@@ -54,11 +53,10 @@ TextField.propTypes = {
   type: PropTypes.oneOf(['text', 'number', 'password', 'date']),
   disabled: PropTypes.bool,
   $fullwidth: PropTypes.bool,
-  dense: PropTypes.bool,
+  $dense: PropTypes.bool,
   as: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
   autoComplete: PropTypes.oneOf(['on', 'off']),
   error: PropTypes.string,
-  onBlur: PropTypes.func,
   asyncValidator: PropTypes.func
 }
 
@@ -67,7 +65,7 @@ TextField.defaultProps = {
   type: 'text',
   disabled: false,
   $fullwidth: false,
-  dense: false,
+  $dense: false,
   autoComplete: 'off'
 }
 
