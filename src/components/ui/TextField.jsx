@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { styled } from 'styled-components'
+import HelperText from './HelperText'
+import Label from './Label'
+import Input from './Input'
 
 const Wrapper = styled.div({
   position: 'relative',
@@ -9,51 +12,17 @@ const Wrapper = styled.div({
   width: (props) => (props.$fullwidth ? '100%' : props.theme.spacing(30))
 })
 
-const Input = styled.input({
-  height: (props) => props.theme.spacing(props.dense ? 5.5 : 6.5),
-  border: (props) =>
-    `1px solid ${
-      props.touched && props.error
-        ? props.theme.palette.error.main
-        : props.theme.palette.gray[500]
-    }`,
-  borderRadius: (props) => props.theme.spacing(1),
-  fontSize: (props) => props.theme.spacing(2),
-  paddingRight: (props) => props.theme.spacing(2),
-  paddingLeft: (props) => props.theme.spacing(2),
-  '&::placeholder': {
-    color: (props) => props.theme.palette.gray[500]
-  },
-  '&:focus': {
-    outlineColor: (props) =>
-      props.touched && props.error
-        ? props.theme.palette.error.main
-        : props.theme.palette.secondary.main
-  }
-})
-
-const Label = styled.label({
-  color: (props) =>
-    props.disabled
-      ? props.theme.palette.gray[500]
-      : props.theme.palette.secondary.main,
-  fontSize: (props) => props.theme.spacing(2),
-  marginBottom: (props) => props.theme.spacing(0.5),
-  fontWeight: 500
-})
-
-const HelperText = styled.span({
-  position: 'absolute',
-  fontSize: (props) => props.theme.spacing(1.5),
-  bottom: (props) => props.theme.spacing(-2),
-  color: (props) => props.theme.palette.error.main
-})
-
 const TextField = (props) => {
+  const [isValid, setIsValid] = useState('success')
   const [touched, setTouched] = useState(false)
-  const { label, $fullwidth, onBlur, ...inputProps } = props
-  const handleBlur = (event) => {
+  const { label, $fullwidth, onBlur, asyncValidator, ...inputProps } = props
+  const handleBlur = async (event) => {
     setTouched(true)
+    if (asyncValidator && !props.error) {
+      setIsValid('loading')
+      const response = await asyncValidator()
+      setIsValid(response ? 'success' : 'error')
+    }
     if (onBlur) onBlur(event)
   }
   return (
@@ -65,6 +34,10 @@ const TextField = (props) => {
       )}
       <Input onBlur={handleBlur} {...inputProps} touched={touched} />
       {touched && props.error && <HelperText>{props.error}</HelperText>}
+      {isValid === 'loading' && <HelperText>Validando</HelperText>}
+      {isValid === 'error' && (
+        <HelperText>{`${props.label} no es válido`}</HelperText>
+      )}
     </Wrapper>
   )
 }
@@ -80,7 +53,8 @@ TextField.propTypes = {
   as: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
   autoComplete: PropTypes.oneOf(['on', 'off']),
   error: PropTypes.string,
-  onBlur: PropTypes.func
+  onBlur: PropTypes.func,
+  asyncValidator: PropTypes.func
 }
 
 TextField.defaultProps = {

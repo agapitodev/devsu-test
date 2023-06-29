@@ -47,7 +47,8 @@ const Button = styled.button.attrs((props) => ({
   cursor: 'pointer',
   textDecoration: 'none',
   '&:disabled, &[disabled]': {
-    opacity: 0.5
+    opacity: 0.5,
+    cursor: 'default'
   }
 })
 
