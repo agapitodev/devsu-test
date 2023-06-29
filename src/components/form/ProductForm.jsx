@@ -17,8 +17,9 @@ const ProductForm = (props) => {
   }, [data.date_release])
 
   const handleSubmit = () => {
-    if (formErrors.length || isLoadingValidations) return
-    onSubmit()
+    if (!formErrors.length && !isLoadingValidations) {
+      onSubmit()
+    }
   }
 
   const checkId = async () => {
@@ -39,6 +40,7 @@ const ProductForm = (props) => {
             color='primary'
             onClick={handleSubmit}
             disabled={Boolean(formErrors.length || isLoadingValidations)}
+            aria-label='submit'
           >
             Enviar
           </Button>
