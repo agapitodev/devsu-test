@@ -32,7 +32,12 @@ const TextField = (props) => {
           {label}
         </Label>
       )}
-      <Input onBlur={handleBlur} {...inputProps} touched={touched} />
+      <Input
+        onBlur={handleBlur}
+        {...inputProps}
+        touched={touched}
+        isValid={isValid !== 'error'}
+      />
       {touched && props.error && <HelperText>{props.error}</HelperText>}
       {isValid === 'loading' && <HelperText>Validando</HelperText>}
       {isValid === 'error' && (
