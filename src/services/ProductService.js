@@ -26,6 +26,12 @@ class ProductService extends HttpClient {
   }
 
   getProducts = () => this._instance.get('/bp/products')
+
+  createProduct = (data) => this._instance.post('/bp/products', data)
+
+  editProduct = (data) => this._instance.put('/bp/products', data)
+
+  deleteProduct = (id) => this._instance.delete(`/bp/products?id=${id}`)
 }
 
 export default ProductService

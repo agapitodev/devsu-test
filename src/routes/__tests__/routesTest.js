@@ -57,7 +57,6 @@ describe('Navigate between routes', () => {
 
     const textElement = screen.getByText(/Formulario de Registro/i)
     expect(textElement).toBeInTheDocument()
-    expect(2 + 2).toBe(4)
   })
 
   test('Redirect to Edit page', async () => {

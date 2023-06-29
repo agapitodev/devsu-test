@@ -19,6 +19,9 @@ export const theme = {
       500: '#9E9E9E',
       700: '#616161',
       900: '#212121'
+    },
+    error: {
+      main: '#F44336'
     }
   },
   spacing: (number) => `${8 * number}px`

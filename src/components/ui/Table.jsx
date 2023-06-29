@@ -96,7 +96,10 @@ const Table = (props) => {
             <tr key={row.id}>
               {header.map((cell) => (
                 <td key={`${row.id}_${cell.key}`}>
-                  {cell.defaultValue ?? row[cell.key]}
+                  {cell.defaultValue ??
+                    (typeof cell.render === 'function'
+                      ? cell.render(row[cell.key], row.id)
+                      : row[cell.key])}
                 </td>
               ))}
             </tr>
@@ -129,7 +132,8 @@ Table.propTypes = {
       key: PropTypes.string.isRequired,
       label: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
         .isRequired,
-      defaultValue: PropTypes.node
+      defaultValue: PropTypes.node,
+      render: PropTypes.func
     })
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.object)

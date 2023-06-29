@@ -29,7 +29,10 @@ const getBackgroundColorButton = (color) => {
   }
 }
 
-const Button = styled.button.attrs((props) => ({ type: props.type }))({
+const Button = styled.button.attrs((props) => ({
+  type: props.type,
+  disabled: props.disabled
+}))({
   display: 'flex',
   alignItems: 'center',
   backgroundColor: (props) => getBackgroundColorButton(props.color),
@@ -42,18 +45,23 @@ const Button = styled.button.attrs((props) => ({ type: props.type }))({
   fontWeight: 500,
   border: 0,
   cursor: 'pointer',
-  textDecoration: 'none'
+  textDecoration: 'none',
+  '&:disabled, &[disabled]': {
+    opacity: 0.5
+  }
 })
 
 Button.propTypes = {
   children: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['button', 'submit', 'reset']),
-  color: PropTypes.oneOf(['primary', 'secondary', 'default'])
+  color: PropTypes.oneOf(['primary', 'secondary', 'default']),
+  disabled: PropTypes.bool
 }
 
 Button.defaultProps = {
   type: 'button',
-  color: 'default'
+  color: 'default',
+  disabled: false
 }
 
 export default Button
