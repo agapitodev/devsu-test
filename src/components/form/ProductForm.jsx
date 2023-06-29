@@ -121,7 +121,7 @@ ProductForm.propTypes = {
   }).isRequired,
   onSubmit: PropTypes.func.isRequired,
   isEditing: PropTypes.bool,
-  resetData: PropTypes.bool
+  resetData: PropTypes.func
 }
 
 ProductForm.defaultProps = {

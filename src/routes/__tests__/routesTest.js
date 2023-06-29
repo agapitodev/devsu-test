@@ -36,12 +36,14 @@ describe('Renders all routes', () => {
     expect(textElement).toBeInTheDocument()
   })
 
-  test('Renders Edit react page', () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['/edit']}>
-        <AppRouter />
-      </MemoryRouter>
-    )
+  test('Renders Edit react page', async () => {
+    await act(async () => {
+      renderWithProviders(
+        <MemoryRouter initialEntries={['/edit/id-exist-test']}>
+          <AppRouter />
+        </MemoryRouter>
+      )
+    })
     const textElement = screen.getByText(/Formulario de Edición/i)
     expect(textElement).toBeInTheDocument()
   })
@@ -66,7 +68,7 @@ describe('Navigate between routes', () => {
       expect(screen.getByText(/Primer producto/i)).toBeInTheDocument()
     })
     await act(async () => {
-      await user.click(screen.getAllByRole('menu')[0])
+      await user.click(screen.getAllByRole('menu')[12])
     })
     await act(async () => {
       await user.click(screen.getByText(/Editar/i))

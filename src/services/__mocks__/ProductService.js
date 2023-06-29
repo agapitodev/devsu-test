@@ -107,7 +107,7 @@ class ProductService {
       date_revision: new Date('2001-01-01').toDateString()
     },
     {
-      id: 'adbu',
+      id: 'id-exist-test',
       name: 'decimotercero',
       description: 'decimotercero producto',
       logo: 'JC',
@@ -115,6 +115,14 @@ class ProductService {
       date_revision: new Date('2001-01-01').toDateString()
     }
   ]
+
+  createProduct = (data) => data
+
+  editProduct = (data) => ({ ...data, name: 'Nuevo' })
+
+  deleteProduct = (id) => true
+
+  productExists = (id) => id === 'id-exist-test'
 }
 
 export default ProductService
