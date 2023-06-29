@@ -11,7 +11,7 @@ import { IoMdInformation } from 'react-icons/io'
 import MenuAction from './MenuAction'
 import { productService } from '../../services'
 import { Link } from 'react-router-dom'
-import { format } from 'date-fns'
+import { formatDate } from '../../utils/dateUtils'
 
 const header = [
   {
@@ -44,7 +44,7 @@ const header = [
       </div>
     ),
     render: (value) => {
-      return format(new Date(value), 'dd/MM/y')
+      return formatDate(new Date(value))
     }
   },
   {
@@ -58,13 +58,15 @@ const header = [
       </div>
     ),
     render: (value) => {
-      return format(new Date(value), 'dd/MM/y')
+      return formatDate(new Date(value))
     }
   },
   {
     key: 'actions',
     label: '',
-    defaultValue: <MenuAction />
+    render: (value, id) => {
+      return <MenuAction id={id} />
+    }
   }
 ]
 

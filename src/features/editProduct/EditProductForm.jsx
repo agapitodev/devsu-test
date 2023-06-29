@@ -4,15 +4,17 @@ import { Card } from '../../components/ui'
 import { addYears, format, parse } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 import { productService } from '../../services'
+import PropTypes from 'prop-types'
+import { formatDate } from '../../utils/dateUtils'
 
-const EditProductForm = () => {
+const EditProductForm = (props) => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    id: '',
-    name: '',
-    description: '',
-    logo: '',
-    date_release: ''
+    id: props.product.id,
+    name: props.product.name,
+    description: props.product.description,
+    logo: props.product.logo,
+    date_release: formatDate(new Date(props.product.date_release))
   })
 
   const setField = (field, value) => {
@@ -49,6 +51,16 @@ const EditProductForm = () => {
       />
     </Card>
   )
+}
+
+EditProductForm.propTypes = {
+  product: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    logo: PropTypes.string.isRequired,
+    date_release: PropTypes.string.isRequired
+  }).isRequired
 }
 
 export default EditProductForm

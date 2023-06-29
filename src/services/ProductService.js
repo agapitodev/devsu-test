@@ -1,6 +1,6 @@
 import HttpClient from './HttpClient'
 
-const AUTHOR_ID = 1521
+const AUTHOR_ID = 471581
 const BASE_URL =
   'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros'
 
@@ -32,6 +32,9 @@ class ProductService extends HttpClient {
   editProduct = (data) => this._instance.put('/bp/products', data)
 
   deleteProduct = (id) => this._instance.delete(`/bp/products?id=${id}`)
+
+  productExists = (id) =>
+    this._instance.get(`/bp/products/verification?id=${id}`)
 }
 
 export default ProductService

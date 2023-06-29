@@ -1,49 +1,31 @@
 import { addYears, format, isValid, parse } from 'date-fns'
 import { Button, Form, TextField, InputMask } from '../ui'
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { validField, validForm } from './ProductFormValidator'
-
-const fields = [
-  { id: 'id', label: 'ID', placeholder: 'Id del producto' },
-  {
-    id: 'name',
-    label: 'Nombre',
-    placeholder: 'Nombre del producto'
-  },
-  {
-    id: 'description',
-    label: 'Descripción',
-    placeholder: 'Descripción del producto'
-  },
-  {
-    id: 'logo',
-    label: 'Logo',
-    placeholder: 'Logo del producto'
-  },
-  {
-    id: 'date_release',
-    label: 'Fecha Liberación',
-    placeholder: format(new Date(), 'dd/MM/y')
-  }
-]
+import { productService } from '../../services'
 
 const ProductForm = (props) => {
   const { data, setField, onSubmit } = props
+  const [isLoadingValidations, setIsLoadingValidations] = useState(false)
   const formErrors = validForm(data)
-  const [revisionDate, setRevisionDate] = useState(
-    format(addYears(new Date(), 1), 'dd/MM/y')
-  )
 
-  const updateRevisionDate = () => {
+  const [revisionDate] = useMemo(() => {
     const dateFromString = parse(data.date_release, 'dd/MM/y', new Date())
     const date = isValid(dateFromString) ? dateFromString : new Date()
-    setRevisionDate(format(addYears(date, 1), 'dd/MM/y'))
-  }
+    return [format(addYears(date, 1), 'dd/MM/y')]
+  }, [data.date_release])
 
   const handleSubmit = () => {
-    if (formErrors.length) return
+    if (formErrors.length || isLoadingValidations) return
     onSubmit()
+  }
+
+  const checkId = async () => {
+    setIsLoadingValidations(true)
+    const invalidId = await productService.productExists(data.id)
+    setIsLoadingValidations(invalidId)
+    return !invalidId
   }
 
   return (
@@ -54,32 +36,67 @@ const ProductForm = (props) => {
           <Button
             color='primary'
             onClick={handleSubmit}
-            disabled={Boolean(formErrors.length)}
+            disabled={Boolean(formErrors.length || isLoadingValidations)}
           >
             Enviar
           </Button>
         </>
       }
     >
-      {fields.map((field) => (
-        <TextField
-          key={field.id}
-          value={data[field.id]}
-          onChange={(ev) => setField(field.id, ev.target.value)}
-          id={field.id}
-          label={field.label}
-          placeholder={field.placeholder}
-          disabled={field.id === 'id' && props.isEditing}
-          aria-label={field.id}
-          error={validField(field.id, data[field.id])}
-          $fullwidth
-          {...(field.id === 'date_release' && {
-            onBlur: updateRevisionDate,
-            as: InputMask,
-            mask: '99/99/9999'
-          })}
-        />
-      ))}
+      <TextField
+        value={data.id}
+        onChange={(ev) => setField('id', ev.target.value)}
+        id='id'
+        label='ID'
+        placeholder='Id del producto'
+        disabled={props.isEditing}
+        aria-label='id'
+        error={validField('id', data.id)}
+        $fullwidth
+        asyncValidator={checkId}
+      />
+      <TextField
+        value={data.name}
+        onChange={(ev) => setField('name', ev.target.value)}
+        id='name'
+        label='Nombre'
+        placeholder='Nombre del producto'
+        aria-label='name'
+        error={validField('name', data.name)}
+        $fullwidth
+      />
+      <TextField
+        value={data.description}
+        onChange={(ev) => setField('description', ev.target.value)}
+        id='description'
+        label='Descripción'
+        placeholder='Descripción del producto'
+        aria-label='description'
+        error={validField('description', data.description)}
+        $fullwidth
+      />
+      <TextField
+        value={data.logo}
+        onChange={(ev) => setField('logo', ev.target.value)}
+        id='logo'
+        label='Logo'
+        placeholder='Logo del producto'
+        aria-label='logo'
+        error={validField('logo', data.logo)}
+        $fullwidth
+      />
+      <TextField
+        value={data.date_release}
+        onChange={(ev) => setField('date_release', ev.target.value)}
+        id='date_release'
+        label='Fecha Liberación'
+        placeholder={format(new Date(), 'dd/MM/y')}
+        aria-label='date_release'
+        error={validField('date_release', data.date_release)}
+        $fullwidth
+        as={InputMask}
+        mask='99/99/9999'
+      />
       <TextField
         placeholder={revisionDate}
         id='date_revision'
@@ -94,7 +111,7 @@ const ProductForm = (props) => {
 ProductForm.propTypes = {
   setField: PropTypes.func.isRequired,
   data: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     logo: PropTypes.string.isRequired,

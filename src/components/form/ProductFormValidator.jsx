@@ -5,7 +5,7 @@ const validId = (value) => {
     return 'El ID es requerido'
   }
   if (value.length < 3 || value.length > 10) {
-    return 'El nombre debe contener entre 3 y 10 caracteres'
+    return 'El ID debe contener entre 3 y 10 caracteres'
   }
   return ''
 }
