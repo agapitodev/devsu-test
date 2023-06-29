@@ -22,7 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "coverage": "npm test -- --coverage",
+    "coverage": "npm test -- --coverage --watchAll=false",
     "lint": "eslint .",
     "eject": "react-scripts eject"
   },

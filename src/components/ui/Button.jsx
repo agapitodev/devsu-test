@@ -11,8 +11,6 @@ const getColorButton = (color) => {
   switch (color) {
     case COLOR_TYPES.PRIMARY:
       return (props) => props.theme.palette.secondary.main
-    case COLOR_TYPES.SECONDARY:
-      return (props) => props.theme.palette.primary.main
     case COLOR_TYPES.DEFAULT:
       return (props) => props.theme.palette.secondary.main
   }
@@ -22,8 +20,6 @@ const getBackgroundColorButton = (color) => {
   switch (color) {
     case COLOR_TYPES.PRIMARY:
       return (props) => props.theme.palette.primary.main
-    case COLOR_TYPES.SECONDARY:
-      return (props) => props.theme.palette.secondary.main
     case COLOR_TYPES.DEFAULT:
       return (props) => props.theme.palette.default.main
   }

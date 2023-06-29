@@ -39,7 +39,7 @@ describe('Renders all routes', () => {
   test('Renders Edit react page', async () => {
     await act(async () => {
       renderWithProviders(
-        <MemoryRouter initialEntries={['/edit/id-exist-test']}>
+        <MemoryRouter initialEntries={['/edit/id-exist']}>
           <AppRouter />
         </MemoryRouter>
       )
@@ -75,6 +75,23 @@ describe('Navigate between routes', () => {
     })
 
     const textElement = screen.getByText(/Formulario de Edición/i)
+    expect(textElement).toBeInTheDocument()
+  })
+
+  test('Redirect to Not Found Product', async () => {
+    const { user } = renderWithRouter(<AppRouter />)
+
+    await waitFor(() => {
+      expect(screen.getByText(/Primer producto/i)).toBeInTheDocument()
+    })
+    await act(async () => {
+      await user.click(screen.getAllByRole('menu')[10])
+    })
+    await act(async () => {
+      await user.click(screen.getByText(/Editar/i))
+    })
+
+    const textElement = screen.getByText(/ERROR 404/i)
     expect(textElement).toBeInTheDocument()
   })
 })

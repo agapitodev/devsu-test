@@ -58,4 +58,14 @@ describe('List Products Feature', () => {
     })
     expect(screen.getByText(/Sexto producto/i)).toBeInTheDocument()
   })
+
+  test('Delete a product', async () => {
+    act(() => {
+      fireEvent.click(screen.getAllByRole('menu')[0])
+      fireEvent.click(document.body)
+      fireEvent.click(screen.getAllByRole('menu')[0])
+    })
+
+    expect(screen.getByText(/Eliminar/i)).toBeInTheDocument()
+  })
 })

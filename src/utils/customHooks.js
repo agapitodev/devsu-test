@@ -4,7 +4,6 @@ export const useFormData = (initialFormData) => {
   const [formData, setFormData] = useState(initialFormData)
 
   const setField = (field, value) => {
-    if (!Object.keys(formData).includes(field)) return
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 

@@ -14,7 +14,7 @@ class ProductService {
       id: 'adb',
       name: 'Primero',
       description: 'Primer producto',
-      logo: 'JC',
+      logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
       date_release: new Date('2000-01-01').toDateString(),
       date_revision: new Date('2001-01-01').toDateString()
     },
@@ -103,11 +103,11 @@ class ProductService {
       name: 'duodecimo',
       description: 'duodecimo producto',
       logo: 'JC',
-      date_release: new Date('2000-01-01').toDateString(),
-      date_revision: new Date('2001-01-01').toDateString()
+      date_release: new Date('2000-02-02').toDateString(),
+      date_revision: new Date('2001-02-02').toDateString()
     },
     {
-      id: 'id-exist-test',
+      id: 'id-exist',
       name: 'decimotercero',
       description: 'decimotercero producto',
       logo: 'JC',
@@ -122,7 +122,7 @@ class ProductService {
 
   deleteProduct = (id) => true
 
-  productExists = (id) => id === 'id-exist-test'
+  productExists = (id) => id === 'id-exist'
 }
 
 export default ProductService

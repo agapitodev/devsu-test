@@ -33,7 +33,7 @@ const Edit = () => {
       ) : exists ? (
         <EditProductForm product={exists} />
       ) : (
-        <Typography>EROR 404: El producto no existe</Typography>
+        <Typography>ERROR 404: El producto no existe</Typography>
       )}
     </Container>
   )

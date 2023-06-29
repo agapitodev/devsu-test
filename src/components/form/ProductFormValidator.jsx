@@ -63,8 +63,6 @@ export const validField = (key, value) => {
       return validLogo(value)
     case 'date_release':
       return validDateRelease(value)
-    default:
-      return ''
   }
 }
 

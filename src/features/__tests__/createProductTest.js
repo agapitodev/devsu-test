@@ -16,6 +16,28 @@ describe('Create Product', () => {
     })
   })
 
+  test('Use invalid ID', async () => {
+    const user = userEvent.setup()
+
+    await act(async () => {
+      await user.type(screen.getByLabelText('id'), 'id-exist')
+      await user.click(screen.getByLabelText('submit'))
+    })
+
+    expect(productService.createProduct).not.toHaveBeenCalled()
+  })
+
+  test('Use invalid Name', async () => {
+    const user = userEvent.setup()
+
+    await act(async () => {
+      await user.type(screen.getByLabelText('name'), 'C')
+      await user.click(screen.getByLabelText('submit'))
+    })
+
+    expect(productService.createProduct).not.toHaveBeenCalled()
+  })
+
   test('Fill form', async () => {
     const user = userEvent.setup()
 
