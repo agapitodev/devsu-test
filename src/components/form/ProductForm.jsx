@@ -32,7 +32,9 @@ const ProductForm = (props) => {
     <Form
       buttons={
         <>
-          <Button>Reiniciar</Button>
+          {!props.isEditing && (
+            <Button onClick={props.resetData}>Reiniciar</Button>
+          )}
           <Button
             color='primary'
             onClick={handleSubmit}
@@ -118,7 +120,8 @@ ProductForm.propTypes = {
     date_release: PropTypes.string.isRequired
   }).isRequired,
   onSubmit: PropTypes.func.isRequired,
-  isEditing: PropTypes.bool
+  isEditing: PropTypes.bool,
+  resetData: PropTypes.bool
 }
 
 ProductForm.defaultProps = {

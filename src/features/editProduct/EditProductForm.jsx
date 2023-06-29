@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import ProudctForm from '../../components/form/ProductForm'
 import { Card } from '../../components/ui'
 import { addYears, format, parse } from 'date-fns'
@@ -6,21 +5,17 @@ import { useNavigate } from 'react-router-dom'
 import { productService } from '../../services'
 import PropTypes from 'prop-types'
 import { formatDate } from '../../utils/dateUtils'
+import { useFormData } from '../../utils/customHooks'
 
 const EditProductForm = (props) => {
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({
+  const [formData, setField] = useFormData({
     id: props.product.id,
     name: props.product.name,
     description: props.product.description,
     logo: props.product.logo,
     date_release: formatDate(new Date(props.product.date_release))
   })
-
-  const setField = (field, value) => {
-    if (!Object.keys(formData).includes(field)) return
-    setFormData((prev) => ({ ...prev, [field]: value }))
-  }
 
   const sendFormData = async () => {
     const dateReleaseFromString = parse(
